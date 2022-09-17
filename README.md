@@ -1,4 +1,4 @@
-# Caster_command_log
+# Caster_command_hud
 ## Customization Examples:
 Windows | Linux
 | :---: | :---: |
@@ -11,17 +11,16 @@ Dragging by background | Clicking through backgroundless window
 
 ## Settings explanation: 
 [the footnotes are notes, for likely changes in the future]
-### setup_window[^1]
-* frameless \<bool> - setting to True, disables window decorations (frame, titlebar) (macOS and Windows require this to be True, for a transparent background)
+### setup_window
+* window_frameless \<bool> - setting to True, disables window decorations (frame, titlebar) (macOS and Windows require this to be True, for a transparent background)
 * width \<int*> - width of the window
 * height \<int*> - height of the window
-* margin \<int*> - margin away from screen edge, where to position the window[^2]
-* alignment \<PySide2.QtCore.Qt.Alignment> - alignment of the window position on the screen (ex. Qt.AlignBottom | Qt.AlignRight, would align it to the bottom right corner of the screen)
+* window_offset_x \<int> - horizontal offset away from screen edge
+* window_offset_y \<int> - vertical offset away from screen edge
+* window_alignment \<PySide2.QtCore.Qt.Alignment> - alignment of the window position on the screen (ex. Qt.AlignBottom | Qt.AlignRight, would align it to the bottom right corner of the screen)
+* screen \<int> - screen on which to open window, invalid values default to 0
 
-\* width, height, margin (accepts float, not necessarily int, but should be limited to int)
-
-[^1]: [maybe all of these variable names should start with window_]
-[^2]: [change to offset_x and offset_y, for ability to position the window anywhere]
+\* width, height (accepts float, not necessarily int, but should be limited to int)
 
 ### setup_command_log
 * direction \<PySide2.QtWidgets.QBoxLayout.Direction> - direction in which command text edits are laid out (ex. QVBoxLayout.TopToBottom, would make new command text edits be added below previous ones)

@@ -120,17 +120,19 @@ class HUDWindow(QMainWindow):
         self.setup_theme()
         
     def setup_window(self):
-        frameless = True
+        window_frameless = True
         width = 300
         height = 200
-        margin = 30
-        alignment = Qt.AlignRight | Qt.AlignBottom
+        window_offset_x = 20
+        window_offset_y = 30
+        window_alignment = Qt.AlignRight | Qt.AlignBottom
+        screen = 0
         
         self.setWindowTitle(settings.HUD_TITLE)
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
            
-        if frameless:
+        if window_frameless:
             print("setting frameless window: On")
             self.setWindowFlag(Qt.FramelessWindowHint, True)
             
@@ -146,25 +148,36 @@ class HUDWindow(QMainWindow):
         else:
             print("setting height: " + str(height))
         
-        if not (type(margin) is int):
-            print("setting default margin: 30")
-            margin = 30
+        if not (type(window_offset_x) is int):
+            print("setting default offset x: 30")
+            window_offset_x = 30
         else:
-            print("setting margin: " + str(margin))
+            print("setting margin: " + str(window_offset_x))
         
-        if not alignment:
+        if not (type(window_offset_y) is int):
+            print("setting default offset y: 30")
+            window_offset_y = 30
+        else:
+            print("setting margin: " + str(window_offset_y))
+        
+        if not (type(screen) is int) or (screen >= len(qApp.screens()) or 
+                screen < 0):
+            screen = 0
+        
+        if not window_alignment:
             print("setting default alignment: top right")
-            alignment = Qt.AlignRight | Qt.AlignTop
+            window_alignment = Qt.AlignRight | Qt.AlignTop
          
         size = QSize(width, height)
         
-        screen_geometry = qApp.primaryScreen().geometry()
-        screen_geometry.adjust(margin, margin, -margin, -margin)
+        screen_geometry = qApp.screens()[screen].geometry()
+        screen_geometry.adjust(window_offset_x, window_offset_y, 
+                                -window_offset_x, -window_offset_y)
         
         self.setGeometry(
             QStyle.alignedRect(
                 Qt.LeftToRight,
-                alignment,
+                window_alignment,
                 size,
                 screen_geometry
             )
