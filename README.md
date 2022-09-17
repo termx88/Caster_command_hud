@@ -29,11 +29,15 @@ Dragging by background | Clicking through backgroundless window
 * draw_rect \<bool> - setting to True, draws a rectangle below text
 * draw_frame \<bool> - setting to True, draws a simple frame around the main widget (different from the window frame, which allows to resize windows. This one is purely visual) [^4]
 * border_radius \<int*> - radius of the rectangle's corners (uses absolute measurements)
+* rect_outline_color \<tuple*> - rectangle outline color 
+* rect_outline_width \<int*> -  rectangle outline width
 * margins \<int*> - margins of the command text edits [^5]
 * spacing \<int*> - spacing between command text edits
 * force_disable_background \<bool> - sets a mask which disables the background of the window (required on linux, to be able to click through the window. For Windows and MacOS (testing needed) it's better to set background_color alpha to 0)
 
-\* border_radius, margins, spacing (should accept float, not necessarily int, but currently can't)
+\* border_radius, margins, spacing, rect_outline_width (should accept float, not necessarily int, but currently can't)
+
+\* rect_outline_color (is tuple of ints (R, G, B, A), but maybe should be PySide2.QtGui.QColor)
 
 [^3]: [maybe change type to PySide2.QtCore.Qt.ScrollBarPolicy, so it's possible to set Qt.ScrollBarAsNeeded. Otherwise at least reverse, so True enables scrollbar]
 [^4]: [maybe automatically set this, according to other settings. Otherwise rename to draw_inner_frame or similar] 

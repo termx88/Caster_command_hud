@@ -13,12 +13,16 @@ class CommandTextEdit(QTextEdit):
                 margins,
                 draw_rect,
                 rect_border_radius = 0,
+                rect_outline_color = QColor(0, 0, 0, 0),
+                rect_outline_width = 0
         ):
         super().__init__(text)
         
         self.draw_rect = draw_rect
-        self.rect_border_radius = rect_border_radius
-        self.document().setDocumentMargin(margins)
+        self.setRectOutlineColor(rect_outline_color)
+        self.rect_outline_width = rect_outline_width
+        self.setRectBorderRadius(rect_border_radius)
+        self.setDocumentMargin(margins)
         
         self.setReadOnly(True)
         self.setFrameShape(QFrame.NoFrame)
@@ -31,9 +35,20 @@ class CommandTextEdit(QTextEdit):
         
     def setRectBorderRadius(self, rect_border_radius):
         self.rect_border_radius = rect_border_radius
+        self.rect_border_radius += self.rect_outline_width / 2
         
     def setDocumentMargin(self, margins):
-        self.document().setDocumentMargin(margins)
+        self.document().setDocumentMargin(margins + self.rect_outline_width)
+    
+    def setRectOutlineColor(self, color):
+        self.rect_outline_color = color
+    
+    def setRectOutlineWidth(self, new_width):
+        base_document_margin = self.document().documentMargin() - self.rect_outline_width
+        base_rect_border_radius = self.rect_border_radius - (self.rect_outline_width / 2)
+        self.rect_outline_width = new_width
+        self.setRectBorderRadius(base_rect_border_radius)
+        self.setDocumentMargin(base_document_margin)
     
     def sizeForWidth(self, width):
         ''' Returns the preferred size for this widget, for the given width '''
@@ -55,8 +70,8 @@ class CommandTextEdit(QTextEdit):
             painter = QPainter(self.viewport())
             painter.setRenderHint(QPainter.Antialiasing, True)
             
-            # color of rectangle border
-            pen = QPen(QColor(0, 0, 0, 0))
+            pen = QPen(self.rect_outline_color)
+            pen.setWidthF(self.rect_outline_width)
             painter.setPen(pen)
         
             brush = self.palette().brush(QPalette.Base)
@@ -65,8 +80,9 @@ class CommandTextEdit(QTextEdit):
             border_radius = self.rect_border_radius
             if border_radius > self.height() / 2:
                 border_radius = self.height() /2
-                
-            painter.drawRoundedRect(self.rect(), border_radius, border_radius)
+            
+            rect = self.rect().adjusted(self.rect_outline_width/2, self.rect_outline_width/2, -self.rect_outline_width/2, -self.rect_outline_width/2)
+            painter.drawRoundedRect(rect, border_radius, border_radius)
         
         super().paintEvent(event)
     
@@ -102,7 +118,14 @@ if __name__ == "__main__":
     app = QApplication()
     window = CommandTextEdit("> - Starting Caster v 1.7.0 with `kaldi` Engine - ",
                             0,
-                            True
+                            True,
+                            10,
+                            QColor(0, 0, 0, 255),
+                            10,
                         )
+                        
+                        
     window.show()
+    # qApp.processEvents()
+    window.setRectOutlineWidth(5)                    
     app.exec_()

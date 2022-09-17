@@ -190,6 +190,8 @@ class HUDWindow(QMainWindow):
         draw_rect = True
         draw_frame = False
         border_radius = 5
+        rect_outline_color = (0, 0, 0, 0)
+        rect_outline_width = 0
         margins = 4
         spacing = ""
         force_disable_background = False
@@ -210,6 +212,12 @@ class HUDWindow(QMainWindow):
         if type(border_radius) is int:            
             print("setting border radius: " + str(border_radius))
             self.output.setTextEditBorderRadius(border_radius) 
+        if rect_outline_color:
+            print("setting color outline color: " + str(rect_outline_color))
+            self.output.setRectOutlineColor(QColor(*rect_outline_color))
+        if type(rect_outline_width) is int:            
+            print("setting rect outline width: " + str(rect_outline_width))
+            self.output.setRectOutlineWidth(rect_outline_width)
         if type(margins) is int:
             print("setting margins: " + str(margins))
             self.output.setTextEditMargins(margins)

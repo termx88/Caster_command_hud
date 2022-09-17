@@ -33,6 +33,8 @@ class CommandLog(QScrollArea):
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.viewport().setAutoFillBackground(False)
         
+        self.rect_outline_color = QColor(0, 0, 0, 0)
+        self.rect_outline_width = 0
         self.scroll_point_pos = None
         self.force_disable_background = False
         
@@ -50,12 +52,7 @@ class CommandLog(QScrollArea):
                     text_edit.setDocumentMargin(margins)
                     self.resizeTextEdit(text_edit)
                 
-                # waiting for scrollbar to be updated
-                qApp.processEvents()
-                qApp.processEvents()
-                # won't be 100 accurate for middle values, 
-                # but will keep scrollbar at the bottom, when at bottom
-                self.setScrollBarToNormalizedPosition(normalized_position)
+                self.setScrollBarToNormalizedPosition(normalized_position, True)
                 
     def setTextEditBorderRadius(self, radius):
         ''' Retroactively sets border radius of text edits '''
@@ -114,12 +111,7 @@ class CommandLog(QScrollArea):
                 
                 self.layout.setSpacing(spacing)
             
-                # waiting for scrollbar to be updated
-                qApp.processEvents()
-                qApp.processEvents()
-                # won't be 100 accurate for middle values, 
-                # but will keep scrollbar at the bottom, when at bottom
-                self.setScrollBarToNormalizedPosition(normalized_position)
+                self.setScrollBarToNormalizedPosition(normalized_position, True)
                     
     def setMaxTextEdits(self, max):
         self.max_text_edits = max
@@ -135,10 +127,41 @@ class CommandLog(QScrollArea):
                 return 0
         return scroll_bar.value() / scroll_bar.maximum()
         
-    def setScrollBarToNormalizedPosition(self, position):
+    def setScrollBarToNormalizedPosition(self, position, wait_for_update = False):
+        # waiting for scrollbar to be updated
+        if wait_for_update == True:
+            qApp.processEvents()
+            qApp.processEvents()
+            # won't be 100 accurate for middle values, 
+            # but will keep scrollbar at the bottom, when at bottom
+                
         maximum = self.verticalScrollBar().maximum()
         new_position = maximum * position
         self.verticalScrollBar().setValue(new_position)
+    
+    def setRectOutlineColor(self, color):
+        ''' Retroactively sets rectangle outline color'''
+        if self.rect_outline_color != color:
+            self.rect_outline_color = color
+            
+            for i in range(self.layout.count()):
+                text_edit = self.layout.itemAt(i).widget()
+                text_edit.setRectOutlineColor(color)
+                text_edit.update()
+        
+    def setRectOutlineWidth(self, width):
+        ''' Retroactively sets rectangle outline width'''
+        if self.rect_outline_width != width:
+            self.rect_outline_width = width
+            if self.layout.count() > 0:        
+                normalized_position = self.getNormalizedScrollBarPosition()    
+                
+                for i in range(self.layout.count()):
+                    text_edit = self.layout.itemAt(i).widget()
+                    text_edit.setRectOutlineWidth(width)
+                    self.resizeTextEdit(text_edit)
+                            
+                self.setScrollBarToNormalizedPosition(normalized_position, True)
     
     def append(self, text):
         ''' Appends a new text edit to the end '''
@@ -147,6 +170,8 @@ class CommandLog(QScrollArea):
                                     self.text_edit_margins,             
                                     self.draw_rect,
                                     self.rect_border_radius,
+                                    self.rect_outline_color,
+                                    self.rect_outline_width
                         )
         
         self.layout.addWidget(command_text_edit, 0, self.layout.alignment())
