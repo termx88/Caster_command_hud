@@ -190,8 +190,8 @@ class HUDWindow(QMainWindow):
         draw_rect = True
         draw_frame = False
         border_radius = 5
-        rect_outline_color = (0, 0, 0, 0)
-        rect_outline_width = 0
+        rect_outline_color = (0, 0, 0, 255)
+        rect_outline_width = 2
         margins = 4
         spacing = ""
         force_disable_background = False

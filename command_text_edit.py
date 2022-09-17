@@ -35,7 +35,6 @@ class CommandTextEdit(QTextEdit):
         
     def setRectBorderRadius(self, rect_border_radius):
         self.rect_border_radius = rect_border_radius
-        self.rect_border_radius += self.rect_outline_width / 2
         
     def setDocumentMargin(self, margins):
         self.document().setDocumentMargin(margins + self.rect_outline_width)
@@ -45,9 +44,7 @@ class CommandTextEdit(QTextEdit):
     
     def setRectOutlineWidth(self, new_width):
         base_document_margin = self.document().documentMargin() - self.rect_outline_width
-        base_rect_border_radius = self.rect_border_radius - (self.rect_outline_width / 2)
         self.rect_outline_width = new_width
-        self.setRectBorderRadius(base_rect_border_radius)
         self.setDocumentMargin(base_document_margin)
     
     def sizeForWidth(self, width):
@@ -70,19 +67,31 @@ class CommandTextEdit(QTextEdit):
             painter = QPainter(self.viewport())
             painter.setRenderHint(QPainter.Antialiasing, True)
             
-            pen = QPen(self.rect_outline_color)
-            pen.setWidthF(self.rect_outline_width)
-            painter.setPen(pen)
-        
             brush = self.palette().brush(QPalette.Base)
             painter.setBrush(brush)
-        
-            border_radius = self.rect_border_radius
-            if border_radius > self.height() / 2:
-                border_radius = self.height() /2
             
-            rect = self.rect().adjusted(self.rect_outline_width/2, self.rect_outline_width/2, -self.rect_outline_width/2, -self.rect_outline_width/2)
-            painter.drawRoundedRect(rect, border_radius, border_radius)
+            border_radius = self.rect_border_radius
+            
+            pen = QPen(self.rect_outline_color)
+            if border_radius == 0:
+                pen.setWidthF(self.rect_outline_width * 2)
+                painter.setPen(pen)
+                painter.drawRect(self.rect())
+            else:
+                pen.setWidthF(self.rect_outline_width)
+                painter.setPen(pen)
+                
+                if border_radius > self.height() / 2:
+                    border_radius = self.height() /2
+                    
+                half_outline_width = self.rect_outline_width / 2
+                rect = self.rect().adjusted(
+                                    half_outline_width, half_outline_width, 
+                                    -half_outline_width, -half_outline_width
+                                )
+                painter.drawRoundedRect(rect, border_radius, border_radius)
+                inner_radius = border_radius + half_outline_width
+                painter.drawRoundedRect(rect, inner_radius, inner_radius)
         
         super().paintEvent(event)
     
@@ -127,5 +136,5 @@ if __name__ == "__main__":
                         
     window.show()
     # qApp.processEvents()
-    window.setRectOutlineWidth(5)                    
+    window.setRectOutlineWidth(50)                    
     app.exec_()
