@@ -152,13 +152,13 @@ class HUDWindow(QMainWindow):
             print("setting default offset x: 30")
             window_offset_x = 30
         else:
-            print("setting margin: " + str(window_offset_x))
+            print("setting offset x: " + str(window_offset_x))
         
         if not (type(window_offset_y) is int):
             print("setting default offset y: 30")
             window_offset_y = 30
         else:
-            print("setting margin: " + str(window_offset_y))
+            print("setting offset y: " + str(window_offset_y))
         
         if not (type(screen) is int) or (screen >= len(qApp.screens()) or 
                 screen < 0):
