@@ -90,8 +90,9 @@ class CommandTextEdit(QTextEdit):
                                     -half_outline_width, -half_outline_width
                                 )
                 painter.drawRoundedRect(rect, border_radius, border_radius)
-                inner_radius = border_radius + half_outline_width
-                painter.drawRoundedRect(rect, inner_radius, inner_radius)
+                if self.rect_outline_width > 1:
+                    inner_radius = border_radius + half_outline_width
+                    painter.drawRoundedRect(rect, inner_radius, inner_radius)
         
         super().paintEvent(event)
     
