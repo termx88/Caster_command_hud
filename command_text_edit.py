@@ -115,7 +115,7 @@ class CommandTextEdit(QTextEdit):
     
     def keyPressEvent(self, event):
         '''
-        Override, so scroll events get passed to parent.
+        Override, so page up and down events get passed to parent.
         '''
         next_page = event.matches(QtGui.QKeySequence.MoveToNextPage)
         previous_page = event.matches(QtGui.QKeySequence.MoveToPreviousPage)
@@ -123,6 +123,13 @@ class CommandTextEdit(QTextEdit):
             event.ignore()
         else:
             super().keyPressEvent(event)
+            
+    def wheelEvent(self, event):
+        '''
+        Override, so it would be impossible to zoom in the text edit.
+        '''
+        event.ignore()
+
     
 if __name__ == "__main__":
     app = QApplication()

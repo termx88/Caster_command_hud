@@ -212,7 +212,7 @@ class HUDWindow(QMainWindow):
         if type(border_radius) is int:            
             print("setting border radius: " + str(border_radius))
             self.output.setTextEditBorderRadius(border_radius) 
-        if rect_outline_color:
+        if rect_outline_color and rect_outline_width > 0:
             print("setting color outline color: " + str(rect_outline_color))
             self.output.setRectOutlineColor(QColor(*rect_outline_color))
         if type(rect_outline_width) is int:            

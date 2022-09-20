@@ -30,7 +30,7 @@ Dragging by background | Clicking through backgroundless window
 * draw_frame \<bool> - setting to True, draws a simple frame around the main widget (different from the window frame, which allows to resize windows. This one is purely visual) [^4]
 * border_radius \<int*> - radius of the rectangle's corners (uses absolute measurements)
 * rect_outline_color \<tuple*> - rectangle outline color 
-* rect_outline_width \<int*> -  rectangle outline width
+* rect_outline_width \<int*> -  rectangle outline width, setting to 0 disables outline
 * margins \<int*> - margins of the command text edits [^5]
 * spacing \<int*> - spacing between command text edits
 * force_disable_background \<bool> - sets a mask which disables the background of the window (required on linux, to be able to click through the window. For Windows and MacOS (testing needed) it's better to set background_color alpha to 0)
