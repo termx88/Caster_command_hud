@@ -11,14 +11,12 @@ class CommandLog(QScrollArea):
     def __init__(self,
                 max_text_edits = 100,
                 text_edit_margins = 4,
-                draw_rect = True,
                 rect_border_radius = 5,
         ):
         super().__init__()
         
         self.max_text_edits = max_text_edits
         
-        self.draw_rect = draw_rect
         self.rect_border_radius = rect_border_radius
         self.text_edit_margins = text_edit_margins
         
@@ -68,16 +66,6 @@ class CommandLog(QScrollArea):
             self.setFrameShape(QtWidgets.QFrame.StyledPanel)
         else: 
             self.setFrameShape(QtWidgets.QFrame.NoFrame)
-    
-    def setDrawRect(self, draw_rect):
-        ''' Retroactively sets if text edits draw a rectangle '''
-        if self.draw_rect != draw_rect:
-            self.draw_rect = draw_rect
-            
-            for i in range(self.layout.count()):
-                text_edit = self.layout.itemAt(i).widget()
-                text_edit.setDrawRect(draw_rect)
-                text_edit.update()
                 
     def setDirection(self, direction):     
         ''' Sets layout direction, updating scrollbar position '''
@@ -168,7 +156,6 @@ class CommandLog(QScrollArea):
         command_text_edit = CommandTextEdit(
                                     text, 
                                     self.text_edit_margins,             
-                                    self.draw_rect,
                                     self.rect_border_radius,
                                     self.rect_outline_color,
                                     self.rect_outline_width

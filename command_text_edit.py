@@ -11,14 +11,12 @@ class CommandTextEdit(QTextEdit):
     def __init__(self,
                 text,
                 margins,
-                draw_rect,
                 rect_border_radius = 0,
                 rect_outline_color = QColor(0, 0, 0, 0),
                 rect_outline_width = 0
         ):
         super().__init__(text)
         
-        self.draw_rect = draw_rect
         self.setRectOutlineColor(rect_outline_color)
         self.rect_outline_width = rect_outline_width
         self.setRectBorderRadius(rect_border_radius)
@@ -29,9 +27,6 @@ class CommandTextEdit(QTextEdit):
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.viewport().setAutoFillBackground(False)
-    
-    def setDrawRect(self, draw_rect):
-        self.draw_rect = draw_rect
         
     def setRectBorderRadius(self, rect_border_radius):
         self.rect_border_radius = rect_border_radius
@@ -63,7 +58,7 @@ class CommandTextEdit(QTextEdit):
         return QSize(width, height)
         
     def paintEvent(self, event):
-        if self.draw_rect == True:
+        if self.palette().color(QPalette.Base).alpha() > 0:
             painter = QPainter(self.viewport())
             painter.setRenderHint(QPainter.Antialiasing, True)
             

@@ -100,10 +100,6 @@ class RulesWindow(QWidget):
 
 class HUDWindow(QMainWindow):
 
-    # _WIDTH = 300
-    # _HEIGHT = 200
-    # _MARGIN = 30
-
     def __init__(self, server):
         QMainWindow.__init__(self)
         self.server = server
@@ -187,7 +183,6 @@ class HUDWindow(QMainWindow):
         direction = QVBoxLayout.TopToBottom
         alignment = Qt.AlignRight | Qt.AlignBottom
         scroll_bar_off = False
-        draw_rect = True
         draw_frame = False
         border_radius = 5
         rect_outline_color = (0, 0, 0, 255)
@@ -224,8 +219,6 @@ class HUDWindow(QMainWindow):
         if type(spacing) is int:
             print("setting spacing: " + str(spacing))
             self.output.setSpacing(spacing)
-        print("setting draw rect: " + str(draw_rect))                
-        self.output.setDrawRect(draw_rect)
         print("setting draw frame: " + str(draw_frame))                
         self.output.setDrawFrame(draw_frame)
         print("setting force background off: " + str(force_disable_background))                
@@ -246,17 +239,12 @@ class HUDWindow(QMainWindow):
             print("setting background color: " + str(background_color))
             palette.setColor(QPalette.Window, QColor(*background_color))
         
+        # setting background alpha 0, so it doesn't show through transparent rectangle
         if self.output.force_disable_background:
             default_color = palette.color(QPalette.Window)    
-            if self.output.draw_rect == False:
-                rect_color = (  palette.color(QPalette.Window).red(),
-                                palette.color(QPalette.Window).green(),
-                                palette.color(QPalette.Window).blue(), 
-                                palette.color(QPalette.Window).alpha() )
-                self.output.setDrawRect(True)
             default_color.setAlpha(0)
             palette.setColor(QPalette.Window, default_color)
-            
+        
         if text_color:
             print("setting text color: " + str(text_color))
             palette.setColor(QPalette.Text, QColor(*text_color))
