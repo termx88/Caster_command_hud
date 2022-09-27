@@ -46,7 +46,6 @@ Dragging by background | Clicking through backgroundless window
 
   [cited from qt docs](https://doc.qt.io/qtforpython-5/PySide2/QtGui/QFont.html#PySide2.QtGui.PySide2.QtGui.QFont.setFamily)
 * rect_color \<tuple*> - color of the rectangle
-* font_subpixel_aa \<bool> - setting to True enables subpixel anti aliasing
 
 \* background_color, text_color, rect_color (are tuple of ints (R, G, B, A), but maybe should be PySide2.QtGui.QColor)
 
