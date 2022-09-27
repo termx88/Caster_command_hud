@@ -130,14 +130,14 @@ class HUDWindow(QMainWindow):
         if window_frameless:
             print("setting frameless window: On")
             self.setWindowFlag(Qt.FramelessWindowHint, True)
-            
-        if not width:
+        
+        if type(width) is not int:
             print("setting default width: 300")
             width = 300
         else:
             print("setting width: " + str(width))
         
-        if not height:
+        if type(height) is not int:
             print("setting default height: 200")
             height = 200
         else:
@@ -203,19 +203,19 @@ class HUDWindow(QMainWindow):
             print("setting scroll bar: on")
             self.output.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         
-        if type(border_radius) is int:            
+        if type(border_radius) in (float, int):            
             print("setting border radius: " + str(border_radius))
             self.output.setTextEditBorderRadius(border_radius) 
         if rect_outline_color and rect_outline_width > 0:
             print("setting color outline color: " + str(rect_outline_color))
             self.output.setRectOutlineColor(QColor(*rect_outline_color))
-        if type(rect_outline_width) is int:            
+        if type(rect_outline_width) in (float, int):            
             print("setting rect outline width: " + str(rect_outline_width))
             self.output.setRectOutlineWidth(rect_outline_width)
-        if type(rect_margins) is int:
+        if type(rect_margins) in (float, int):
             print("setting rect_margins: " + str(rect_margins))
             self.output.setTextEditMargins(rect_margins)
-        if type(spacing) is int:
+        if type(spacing) in (float, int):
             print("setting spacing: " + str(spacing))
             self.output.setSpacing(spacing)
         print("setting draw frame: " + str(draw_frame))                
