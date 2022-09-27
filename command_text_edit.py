@@ -1,10 +1,8 @@
-from PySide2.QtCore import Qt, QPropertyAnimation, QEasingCurve, QParallelAnimationGroup, QPoint, QRectF, QRect, QSize
-from PySide2.QtGui import QPainter, QPen, QColor, QFont, QBrush, QPalette, QFontMetricsF, QFontMetrics, QTextOption
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QLabel, QApplication, QLayout, QTextEdit, QSizePolicy, QFrame, QLineEdit
+from PySide2.QtCore import Qt, QSize
+from PySide2.QtGui import QPainter, QPen, QColor, QPalette
+from PySide2.QtWidgets import QTextEdit, QFrame
 
 from PySide2 import QtGui
-import sys
-import html
 import math
 
 class CommandTextEdit(QTextEdit):
@@ -124,20 +122,3 @@ class CommandTextEdit(QTextEdit):
         Override, so it would be impossible to zoom in the text edit.
         '''
         event.ignore()
-
-    
-if __name__ == "__main__":
-    app = QApplication()
-    window = CommandTextEdit("> - Starting Caster v 1.7.0 with `kaldi` Engine - ",
-                            0,
-                            True,
-                            10,
-                            QColor(0, 0, 0, 255),
-                            10,
-                        )
-                        
-                        
-    window.show()
-    # qApp.processEvents()
-    window.setRectOutlineWidth(50)                    
-    app.exec_()

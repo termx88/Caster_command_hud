@@ -31,9 +31,8 @@ finally:
 from command_log import CommandLog
 
 from PySide2.QtCore import Qt, QSize
-from PySide2.QtGui import QPalette, QColor, QFont, QBrush, QRegion
-from PySide2.QtWidgets import QStyleFactory, QStyle
-from PySide2 import QtWidgets, QtCore
+from PySide2.QtGui import QPalette, QColor, QFont, QRegion
+from PySide2.QtWidgets import QStyle
 
 CLEAR_HUD_EVENT = PySide2.QtCore.QEvent.Type(PySide2.QtCore.QEvent.registerEventType(-1))
 HIDE_HUD_EVENT = PySide2.QtCore.QEvent.Type(PySide2.QtCore.QEvent.registerEventType(-1))
@@ -187,7 +186,7 @@ class HUDWindow(QMainWindow):
         border_radius = 5
         rect_outline_color = (0, 0, 0, 255)
         rect_outline_width = 2
-        margins = 4
+        rect_margins = 4
         spacing = ""
         force_disable_background = False
         
@@ -213,9 +212,9 @@ class HUDWindow(QMainWindow):
         if type(rect_outline_width) is int:            
             print("setting rect outline width: " + str(rect_outline_width))
             self.output.setRectOutlineWidth(rect_outline_width)
-        if type(margins) is int:
-            print("setting margins: " + str(margins))
-            self.output.setTextEditMargins(margins)
+        if type(rect_margins) is int:
+            print("setting rect_margins: " + str(rect_margins))
+            self.output.setTextEditMargins(rect_margins)
         if type(spacing) is int:
             print("setting spacing: " + str(spacing))
             self.output.setSpacing(spacing)
@@ -230,7 +229,6 @@ class HUDWindow(QMainWindow):
         font_size = ""
         font_family = ""
         rect_color = ""
-        font_subpixel_aa = ""
         
         palette = self.palette()
         font = self.font()
@@ -258,9 +256,6 @@ class HUDWindow(QMainWindow):
         if rect_color:
             print("setting rect color: " + str(rect_color))
             palette.setColor(QPalette.Base, QColor(*rect_color))
-        if not font_subpixel_aa: 
-            print("setting font aa: Off")
-            font.setStyleStrategy(QFont.NoSubpixelAntialias)
         
         self.setFont(font)
         self.setPalette(palette)

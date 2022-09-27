@@ -1,8 +1,8 @@
-from PySide2.QtCore import Qt, QPropertyAnimation, QEasingCurve, QParallelAnimationGroup, QPoint, QRectF, QRect, QEvent
-from PySide2.QtGui import QPainter, QPen, QColor, QFont, QBrush, QPalette, QTextDocument, QRegion
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QApplication, QSizePolicy, QScrollArea, QLayout, QStackedLayout 
-from PySide2 import QtWidgets, QtCore
+from PySide2.QtCore import Qt, QPoint
+from PySide2.QtGui import QPainter, QPen, QColor, QPalette, QRegion
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QScrollArea 
 from PySide2.QtCore import Qt
+from PySide2 import QtWidgets
 
 from command_text_edit import CommandTextEdit
 
@@ -35,6 +35,9 @@ class CommandLog(QScrollArea):
         self.rect_outline_width = 0
         self.scroll_point_pos = None
         self.force_disable_background = False
+        self.scroll_to_bottom = False
+        
+        self.verticalScrollBar().rangeChanged.connect(self.scrollToBottom)
         
     def setTextEditMargins(self, margins):
         '''
@@ -167,8 +170,8 @@ class CommandLog(QScrollArea):
         self.resizeTextEdit(command_text_edit)
         
         if self.layout.direction() == QVBoxLayout.TopToBottom:
-            self.scrollToBottom()
-        
+            self.scroll_to_bottom = True
+            
     def clearTo(self, num_to_keep):
         if self.layout.count() > num_to_keep:
             while self.layout.count() > num_to_keep:
@@ -181,8 +184,9 @@ class CommandLog(QScrollArea):
         self.clearTo(0)
     
     def scrollToBottom(self):
-        qApp.processEvents()
-        self.verticalScrollBar().setValue(self.verticalScrollBar().maximum())
+        if self.scroll_to_bottom == True:
+            self.scroll_to_bottom = False
+            self.verticalScrollBar().setValue(self.verticalScrollBar().maximum())
         
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -270,14 +274,3 @@ class CommandLog(QScrollArea):
                               1, 1)
         return region
     
-if __name__ == "__main__":
-    app = QApplication()
-    runner = CommandLog()
-    runner.resize(400, 400)
-    
-    runner.setWindowFlags(Qt.FramelessWindowHint)
-    runner.show()
-    
-    runner.append("> - Starting Caster v 1.7.0 with `kaldi` Engine - ")
-    runner.append('<font color="purple">&gt;</font> - Starting Caster v 1.7.0 with `kaldi` Engine - ')
-    app.exec_()
