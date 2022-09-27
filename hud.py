@@ -34,6 +34,33 @@ from PySide2.QtCore import Qt, QSize
 from PySide2.QtGui import QPalette, QColor, QFont, QRegion
 from PySide2.QtWidgets import QStyle
 
+# window
+WINDOW_FRAMELESS = True
+WIDTH = 300
+HEIGHT = 200
+WINDOW_OFFSET_X = 20
+WINDOW_OFFSET_Y = 30
+WINDOW_ALIGNMENT = Qt.AlignRight | Qt.AlignBottom
+SCREEN = 0
+# command log
+DIRECTION = QVBoxLayout.TopToBottom
+ALIGNMENT = Qt.AlignRight | Qt.AlignBottom
+SCROLL_BAR_OFF = False
+DRAW_FRAME = False
+BORDER_RADIUS = 5
+RECT_OUTLINE_COLOR = (0, 0, 0, 255)
+RECT_OUTLINE_WIDTH = 2
+RECT_MARGINS = 4
+SPACING = ""
+FORCE_DISABLE_BACKGROUND = False
+# palette
+BACKGROUND_COLOR = (50, 0, 0, 10)
+TEXT_COLOR = ""
+FONT_SIZE = ""
+FONT_FAMILY = ""
+RECT_COLOR = ""
+                        
+
 CLEAR_HUD_EVENT = PySide2.QtCore.QEvent.Type(PySide2.QtCore.QEvent.registerEventType(-1))
 HIDE_HUD_EVENT = PySide2.QtCore.QEvent.Type(PySide2.QtCore.QEvent.registerEventType(-1))
 SHOW_HUD_EVENT = PySide2.QtCore.QEvent.Type(PySide2.QtCore.QEvent.registerEventType(-1))
@@ -112,16 +139,16 @@ class HUDWindow(QMainWindow):
         
         self.setup_window()
         self.setup_command_log()
-        self.setup_theme()
+        self.setup_palette()
         
     def setup_window(self):
-        window_frameless = True
-        width = 300
-        height = 200
-        window_offset_x = 20
-        window_offset_y = 30
-        window_alignment = Qt.AlignRight | Qt.AlignBottom
-        screen = 0
+        window_frameless = WINDOW_FRAMELESS
+        width = WIDTH
+        height = HEIGHT
+        window_offset_x = WINDOW_OFFSET_X
+        window_offset_y = WINDOW_OFFSET_Y
+        window_alignment = WINDOW_ALIGNMENT
+        screen = SCREEN
         
         self.setWindowTitle(settings.HUD_TITLE)
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -179,16 +206,16 @@ class HUDWindow(QMainWindow):
         )
 
     def setup_command_log(self):
-        direction = QVBoxLayout.TopToBottom
-        alignment = Qt.AlignRight | Qt.AlignBottom
-        scroll_bar_off = False
-        draw_frame = False
-        border_radius = 5
-        rect_outline_color = (0, 0, 0, 255)
-        rect_outline_width = 2
-        rect_margins = 4
-        spacing = ""
-        force_disable_background = False
+        direction = DIRECTION
+        alignment = ALIGNMENT
+        scroll_bar_off = SCROLL_BAR_OFF
+        draw_frame = DRAW_FRAME
+        border_radius = BORDER_RADIUS
+        rect_outline_color = RECT_OUTLINE_COLOR
+        rect_outline_width = RECT_OUTLINE_WIDTH
+        rect_margins = RECT_MARGINS
+        spacing = SPACING
+        force_disable_background = FORCE_DISABLE_BACKGROUND
         
         if direction:
             print("setting direction: " + str(direction))
@@ -223,12 +250,12 @@ class HUDWindow(QMainWindow):
         print("setting force background off: " + str(force_disable_background))                
         self.output.setForceDisableBackground(force_disable_background)
     
-    def setup_theme(self):
-        background_color = (50, 0, 0, 10)
-        text_color = ""
-        font_size = ""
-        font_family = ""
-        rect_color = ""
+    def setup_palette(self):
+        background_color = BACKGROUND_COLOR
+        text_color = TEXT_COLOR
+        font_size = FONT_SIZE
+        font_family = FONT_FAMILY
+        rect_color = RECT_COLOR
         
         palette = self.palette()
         font = self.font()
