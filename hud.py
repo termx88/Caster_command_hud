@@ -275,8 +275,7 @@ class HUDWindow(QMainWindow):
             palette.setColor(QPalette.Text, QColor(*text_color))
         if font_size:
             print("setting font size: " + str(font_size))
-            font.setPixelSize(font_size)
-            # font.setPointSize(font_size)
+            font.setPointSize(font_size)
         if font_family:
             print("setting font family: " + str(font_family))
             font.setFamily(font_family)

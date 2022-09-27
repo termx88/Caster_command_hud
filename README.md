@@ -36,7 +36,7 @@ Dragging by background | Clicking through backgroundless window
 ### palette
 * BACKGROUND_COLOR \<tuple*> - the background color of the window (ex. (50, 0, 0, 10), would be a lightly red almost fully transparent window.) Setting the alpha of this to 0 is the preferred way to disable the background on Windows and MacOS (testing needed)
 * TEXT_COLOR \<tuple*> - the color of the text
-* FONT_SIZE \<float> - size of the font (measured in pixel size)
+* FONT_SIZE \<float> - size of the font in points
 * FONT_FAMILY \<str> - the family name of the font
   > The family name may optionally also include a foundry name, e.g. “Helvetica [Cronyx]”. If the family is available from more than one foundry and the foundry isn’t specified, an arbitrary foundry is chosen. If the family isn’t available a family will be set using the font matching algorithm. 
 
