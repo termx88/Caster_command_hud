@@ -16,8 +16,8 @@ Dragging by background | Clicking through backgroundless window
 * In settings.toml ([user dir docs](https://caster.readthedocs.io/en/latest/readthedocs/User_Dir/Caster_User_Dir/)) change HUD_PATH to point to the hud.py gotten from this repo.
 * If Caster is already running with a hud instance. Close hud and reboot caster.
 ### Testing
-* requirements.txt in master doesn't include PySide2, so if you've installed from that, you might need to run `pip install PySide2` or `python -m pip install PySide2`
 * Running `test_runner.py` will open 4 windows with different settings (like in the screenshots)
+* requirements.txt in master doesn't include PySide2, so might need to install it. If needed run `pip install PySide2` or `python -m pip install PySide2`. And try running `test_runner.py` again.
 
 ## Settings explanation: 
 ### window
