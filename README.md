@@ -55,3 +55,16 @@ Dragging by background | Clicking through backgroundless window
 * FONT_SUBPIXEL_AA \<bool> - setting to True enables subpixel anti aliasing
 
 \* BACKGROUND_COLOR, TEXT_COLOR, RECT_COLOR (are tuple of ints (R, G, B, A), but maybe should be PySide2.QtGui.QColor)
+
+## Other info. Known quirks.
+1. Setting FORCE_DISABLE_BACKGROUND to True and WINDOW_FRAMELESS to False. 
+   * On Plasma removes titlebar. 
+   * On Ubuntu keeps decorations, but isn't click through-able.
+   * On Windows (10 at least), results in qt (snapshoted) decorations, that don't look quite right.
+   * But on xfce, looks and works as expected (click through-able with decorations).
+2. When the window has a fully transparent or forcefully disabled background. 
+    A Scrolling point is drawn under the mouse when scrolling.
+    Without it, scrolling and the mouse hitting a transparent area, stops the scrolling.
+3. Scrolling point is visible (opaque black), when the window has decorations and platform doesn't support transparency for framed windows.
+4. Append occasionally looks jittery, happens because command (blue) gets sent before rdescript (red). And added with a delay, though most get added in pairs.
+5. FORCE_DISABLE_BACKGROUND causes jittery updates, when the mask gets updated. Might be exaggerated 4.
