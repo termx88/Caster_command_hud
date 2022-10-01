@@ -327,8 +327,10 @@ class HUDWindow(QMainWindow):
         return QMainWindow.event(self, event)
 
     def mousePressEvent(self, event):
-        if self.drag_begin_pos == None and (
-                self.windowFlags() & Qt.FramelessWindowHint):
+        is_frameless = self.windowFlags() & Qt.FramelessWindowHint
+        has_background = (self.output.force_disable_background == False and
+                      self.palette().color(QPalette.Window).alpha() > 0)
+        if self.drag_begin_pos == None and is_frameless and has_background:
             if (event.button() == Qt.LeftButton or 
                 event.button() == Qt.RightButton):
                 self.drag_begin_pos = event.pos()
