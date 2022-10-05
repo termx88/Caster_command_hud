@@ -1,4 +1,5 @@
 # Caster_command_hud
+A more configurable HUD (window displaying said commands) implementation for Caster. Used as a base was the [hud.py](https://github.com/dictation-toolbox/Caster/blob/DropPy2/castervoice/asynch/hud.py) file, from the Caster [DropPy2 branch](https://github.com/dictation-toolbox/Caster/tree/DropPy2).
 ## Customization Examples:
 Windows | Linux
 | :---: | :---: |
@@ -10,15 +11,13 @@ Dragging by background | Clicking through backgroundless window
 <img src="./art/dragging.gif"/> | <img src="./art/click_through.gif"/>
 
 ## Usage Instructions:
-* Clone this repo.
 ### With Caster
 * You have to be using Caster with hud support. Currently that's the [DropPy2 branch](https://github.com/dictation-toolbox/Caster/tree/DropPy2).
 * In settings.toml ([user dir docs](https://caster.readthedocs.io/en/latest/readthedocs/User_Dir/Caster_User_Dir/)) change HUD_PATH to point to the hud.py gotten from this repo.
 * If Caster is already running with a hud instance. Close hud and reboot caster.
 ### Testing
 * Running `test_runner.py` will open 4 windows with different settings (like in the screenshots)
-* requirements.txt in master doesn't include PySide2, so might need to install it. If needed run `pip install PySide2` or `python -m pip install PySide2`. And try running `test_runner.py` again.
-
+* requirements.txt in Caster master doesn't include PySide2, so you might need to install it. If needed run `pip install PySide2` or `python -m pip install PySide2`.
 ## Settings explanation: 
 ### window
 * WINDOW_FRAMELESS \<bool> - setting to True, disables window decorations (frame, titlebar) (macOS and Windows require this to be True, for a transparent background)
